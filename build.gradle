@@ -1,0 +1,104 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0.0'
+group = 'com.romchik.chickenburger'
+archivesBaseName = 'chickenburger'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+mcModInfo [
+    {
+        modid = "chickenburger"
+        name = "Chicken Burger Mod"
+        description = "Adds a delicious chicken burger with transformation effect"
+        version = "1.0.0"
+        mcversion = "1.16.5"
+        url = ""
+        updateUrl = ""
+        authorList = ["Romchik"]
+        credits = ""
+        logoFile = ""
+        screenshots = []
+        parent = ""
+        requiredMods = []
+        dependencies = []
+        incompatibilities = []
+        showAsResourcePack = false
+        canBeDeactivated = true
+    }
+]
+
+minecraft {
+    mappings channel: 'official', version: '1.16.5'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.level', 'debug'
+            mods {
+                chickenburger {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.level', 'debug'
+            mods {
+                chickenburger {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net' }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title"     : "chickenburger",
+            "Specification-Vendor"    : "Romchik",
+            "Specification-Version"   : "1",
+            "Implementation-Title"    : project.name,
+            "Implementation-Version"  : project.jar.archiveVersion,
+            "Implementation-Vendor"   : "Romchik",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+modLoader="javafxmod"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="chickenburger"
+version="1.0.0"
+displayName="Chicken Burger Mod"
+url="https://github.com/romansergeev006-stack/ChickenBurgerMod"
+updateJSONURL=""
+author="Romchik"
+description="""Adds a delicious chicken burger that transforms you into a chicken for 60 seconds!"""
+logo=""
